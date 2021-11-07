@@ -1,0 +1,46 @@
+import React from 'react';
+import Navbar from './Navbar'
+import Maincontent from './Maincontent'
+import Footer from './Footer'
+import jokesData from './jokesData'
+import todosData from './todosData'
+import contact from './contact.png'
+
+
+class MyInfo extends React.Component{
+       constructor(){
+           super()
+           this.state={
+               loading:false,
+               character:{}
+           }
+       }
+
+       componentDidMount(){
+           this.setState({
+              loading:true
+           })
+            fetch("http://api.geonames.org/citiesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&lang=de&username=demo")
+            .then(response=>response.json())
+            .then(data=>{
+                this.setState({
+                    loading:false,
+                    character:data
+                })
+            })
+       }
+
+       render(){
+          
+           return(
+               
+                    this.state.loading===true ?
+                    <h1>Loading</h1> :
+                   <h1>{this.state.character.geonames}</h1>
+              
+           )
+       }
+}
+
+
+export default MyInfo;
